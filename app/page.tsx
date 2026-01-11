@@ -134,6 +134,27 @@ export default function WizardPage() {
         costs
       );
 
+      // Send n8n webhook
+      try {
+        await logEvent(submissionId, "webhook.send.requested", "wizard", "success");
+        const webhookResponse = await fetch("/api/webhook/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ submission_id: submissionId }),
+        });
+        
+        const webhookResult = await webhookResponse.json();
+        
+        if (webhookResult.status === "sent") {
+          await logEvent(submissionId, "webhook.sent", "wizard", "success", "Webhook sent successfully");
+        } else {
+          await logEvent(submissionId, "webhook.failed", "wizard", "failed", webhookResult.message || "Failed to send webhook");
+        }
+      } catch (webhookError) {
+        console.error("Webhook error:", webhookError);
+        await logEvent(submissionId, "webhook.failed", "wizard", "failed", "Webhook API request failed");
+      }
+
       // Send results email
       await logEvent(submissionId, "email.send.requested", "wizard", "success");
       
