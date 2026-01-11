@@ -386,135 +386,128 @@ export default function ResultsPage() {
     <AuroraBackground>
       <GlobalNav showDashboardLink />
       
-      <div className="container mx-auto px-4 py-8 sm:py-12 max-w-full overflow-x-hidden">
-        <div className="max-w-5xl mx-auto space-y-8">
-          {/* Hero section */}
+      <div className="container mx-auto px-4 py-4 sm:py-12 max-w-full overflow-x-hidden">
+        <div className="max-w-5xl mx-auto space-y-4 sm:space-y-8">
+          {/* Hero section - Compact on mobile */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            className="text-center space-y-2 sm:space-y-4"
           >
-            <h1 className="text-4xl sm:text-5xl font-bold">
+            <h1 className="text-3xl sm:text-5xl font-bold">
               <span className="text-gradient">Your Custom</span>
-              <br />
+              <br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>
               Lunch Budget Plan
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl mx-auto hidden sm:block">
               Review your personalized plan below. You can edit any details if needed.
             </p>
           </motion.div>
 
           {/* Cost Breakdown - MOVED TO TOP */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
           >
             <GlassCard glow>
-              <GlassCardHeader>
-                <GlassCardTitle className="text-3xl">Cost Breakdown</GlassCardTitle>
-                <GlassCardDescription className="text-base">
+              <GlassCardHeader className="pb-3 sm:pb-6">
+                <GlassCardTitle className="text-2xl sm:text-3xl">Cost Breakdown</GlassCardTitle>
+                <GlassCardDescription className="text-sm sm:text-base hidden sm:block">
                   Your estimated costs based on the provided information
                 </GlassCardDescription>
               </GlassCardHeader>
               <GlassCardContent>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-3 sm:gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.15 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.15 }}
                     className="group relative"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
-                    <div className="relative p-6 rounded-2xl glass border-2 border-primary/30 hover:border-primary/50 transition-all">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                          <DollarSign className="w-5 h-5 text-primary" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl sm:rounded-2xl blur-sm sm:blur-xl group-hover:blur-md sm:group-hover:blur-2xl transition-all" />
+                    <div className="relative p-3 sm:p-6 rounded-xl sm:rounded-2xl glass border border-primary/30 sm:border-2 hover:border-primary/50 transition-all">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/20 flex items-center justify-center">
+                          <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                         </div>
-                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                        <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                           Per Person
                         </div>
                       </div>
-                      <div className="text-2xl sm:text-3xl font-bold text-gradient break-words">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient break-words">
                         {formatCurrency(submission.cost_per_person)}
                       </div>
-                      <div className="mt-2 text-xs text-muted-foreground">
+                      <div className="mt-1 sm:mt-2 text-[10px] sm:text-xs text-muted-foreground hidden sm:block">
                         Base rate per employee
                       </div>
                     </div>
                   </motion.div>
                   
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.15, delay: 0.05 }}
                     className="group relative"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
-                    <div className="relative p-6 rounded-2xl glass border border-border/50 hover:border-blue-500/30 transition-all">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                          <Calendar className="w-5 h-5 text-blue-500" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-xl sm:rounded-2xl blur-sm sm:blur-xl group-hover:blur-md sm:group-hover:blur-2xl transition-all" />
+                    <div className="relative p-3 sm:p-6 rounded-xl sm:rounded-2xl glass border border-border/50 hover:border-blue-500/30 transition-all">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-500/20 flex items-center justify-center">
+                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
                         </div>
-                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                        <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                           Daily
                         </div>
                       </div>
-                      <div className="text-2xl sm:text-3xl font-bold break-words">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold break-words">
                         {formatCurrency(submission.daily_cost)}
-                      </div>
-                      <div className="mt-2 text-xs text-muted-foreground">
-                        Cost per working day
                       </div>
                     </div>
                   </motion.div>
                   
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.25 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.15, delay: 0.1 }}
                     className="group relative"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
-                    <div className="relative p-6 rounded-2xl glass border border-border/50 hover:border-green-500/30 transition-all">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
-                          <Calendar className="w-5 h-5 text-green-500" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-xl sm:rounded-2xl blur-sm sm:blur-xl group-hover:blur-md sm:group-hover:blur-2xl transition-all" />
+                    <div className="relative p-3 sm:p-6 rounded-xl sm:rounded-2xl glass border border-border/50 hover:border-green-500/30 transition-all">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-green-500/20 flex items-center justify-center">
+                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                         </div>
-                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                        <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                           Weekly
                         </div>
                       </div>
-                      <div className="text-2xl sm:text-3xl font-bold break-words">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold break-words">
                         {formatCurrency(submission.weekly_cost)}
-                      </div>
-                      <div className="mt-2 text-xs text-muted-foreground">
-                        Total per week
                       </div>
                     </div>
                   </motion.div>
                   
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.15, delay: 0.15 }}
                     className="group relative"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
-                    <div className="relative p-6 rounded-2xl glass border-2 border-secondary/30 hover:border-secondary/50 transition-all">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center">
-                          <TrendingUp className="w-5 h-5 text-secondary" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-xl sm:rounded-2xl blur-sm sm:blur-xl group-hover:blur-md sm:group-hover:blur-2xl transition-all" />
+                    <div className="relative p-3 sm:p-6 rounded-xl sm:rounded-2xl glass border border-secondary/30 sm:border-2 hover:border-secondary/50 transition-all">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-secondary/20 flex items-center justify-center">
+                          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" />
                         </div>
-                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                        <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                           Monthly
                         </div>
                       </div>
-                      <div className="text-2xl sm:text-3xl font-bold text-gradient break-words">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient break-words">
                         {formatCurrency(submission.monthly_cost)}
-                      </div>
-                      <div className="mt-2 text-xs text-muted-foreground">
-                        Estimated monthly total
                       </div>
                     </div>
                   </motion.div>
@@ -552,16 +545,16 @@ export default function ResultsPage() {
             </GlassCard>
           </motion.div>
 
-          {/* Details Cards */}
-          <div className="grid gap-6 lg:grid-cols-2">
+          {/* Details Cards - Collapsible on mobile */}
+          <div className="grid gap-3 sm:gap-6 lg:grid-cols-2">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <GlassCard>
-                <GlassCardHeader>
-                  <GlassCardTitle className="text-2xl">Contact Details</GlassCardTitle>
+                <GlassCardHeader className="pb-3 sm:pb-6">
+                  <GlassCardTitle className="text-lg sm:text-2xl">Contact Details</GlassCardTitle>
                 </GlassCardHeader>
                 <GlassCardContent className="space-y-3">
                   {renderEditableField(
@@ -590,13 +583,13 @@ export default function ResultsPage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.05 }}
             >
               <GlassCard>
-                <GlassCardHeader>
-                  <GlassCardTitle className="text-2xl">Order Details</GlassCardTitle>
+                <GlassCardHeader className="pb-3 sm:pb-6">
+                  <GlassCardTitle className="text-lg sm:text-2xl">Order Details</GlassCardTitle>
                 </GlassCardHeader>
                 <GlassCardContent className="space-y-3">
                   {renderEditableField(
@@ -632,15 +625,16 @@ export default function ResultsPage() {
             </motion.div>
           </div>
 
-          {/* Additional Options */}
+          {/* Additional Options - Hidden on mobile to reduce scrolling */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            className="hidden sm:block"
           >
             <GlassCard>
-              <GlassCardHeader>
-                <GlassCardTitle className="text-2xl">Additional Options</GlassCardTitle>
+              <GlassCardHeader className="pb-3 sm:pb-6">
+                <GlassCardTitle className="text-lg sm:text-2xl">Additional Options</GlassCardTitle>
               </GlassCardHeader>
               <GlassCardContent className="space-y-3">
                 {renderEditableField(
@@ -654,22 +648,22 @@ export default function ResultsPage() {
             </GlassCard>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Contact Information - Compact on mobile */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
           >
             <GlassCard className="relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-full blur-3xl -z-10" />
-              <GlassCardContent className="flex flex-col sm:flex-row items-center justify-between gap-6 p-8">
+              <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-full blur-xl sm:blur-3xl -z-10" />
+              <GlassCardContent className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 p-4 sm:p-8">
                 <div className="flex-1 text-center sm:text-left">
-                  <div className="text-2xl font-bold mb-2">Questions or Ready to Start?</div>
-                  <div className="text-base text-muted-foreground mb-1">
+                  <div className="text-lg sm:text-2xl font-bold mb-1 sm:mb-2">Questions or Ready to Start?</div>
+                  <div className="text-sm sm:text-base text-muted-foreground mb-2 sm:mb-1 hidden sm:block">
                     We've sent this estimate to your email. Contact us to get started!
                   </div>
-                  <div className="text-lg font-semibold text-primary flex items-center gap-2 mt-4 justify-center sm:justify-start">
-                    <Phone className="h-5 w-5" />
+                  <div className="text-base sm:text-lg font-semibold text-primary flex items-center gap-2 mt-2 sm:mt-4 justify-center sm:justify-start">
+                    <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
                     <span>{contactPhone}</span>
                   </div>
                 </div>

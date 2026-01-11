@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AuroraBackground } from "@/components/blocks/AuroraBackground";
 import { AnimatedBackground } from "@/components/blocks/AnimatedBackground";
 import { GlobalNav } from "@/components/blocks/GlobalNav";
+import { isMobileDevice, getSlideVariants } from "@/lib/mobile-utils";
 import { WelcomeIntro } from "@/components/wizard/WelcomeIntro";
 import {
   GlassCard,
@@ -39,9 +40,11 @@ export default function WizardPage() {
   const [isStepValid, setIsStepValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [direction, setDirection] = useState<"forward" | "backward">("forward");
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     loadSchema().then(setSchema);
+    setIsMobile(isMobileDevice());
   }, []);
 
   if (!schema) {
@@ -134,9 +137,13 @@ export default function WizardPage() {
         costs
       );
 
-      // Send n8n webhook
+      // Send n8n webhook - Add small delay to ensure submission is saved
       try {
         await logEvent(submissionId, "webhook.send.requested", "wizard", "success");
+        
+        // Small delay to ensure submission is fully saved to database
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         const webhookResponse = await fetch("/api/webhook/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -232,49 +239,37 @@ export default function WizardPage() {
     }
   };
 
-  const slideVariants = {
-    enter: (direction: string) => ({
-      x: direction === "forward" ? 100 : -100,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: string) => ({
-      x: direction === "forward" ? -100 : 100,
-      opacity: 0,
-    }),
-  };
+  const slideVariants = getSlideVariants(isMobile);
 
   return (
     <>
       <AnimatedBackground />
       <GlobalNav showDashboardLink />
       
-      <div className="container mx-auto px-4 py-8 sm:py-12 max-w-full overflow-x-hidden">
-        <div className="max-w-3xl mx-auto space-y-8">
-          {/* Hero section */}
+      <div className="container mx-auto px-4 py-4 sm:py-12 max-w-full overflow-x-hidden">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-8">
+          {/* Hero section - Compact on mobile */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-4"
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={{ duration: isMobile ? 0.2 : 0.3 }}
+            className="text-center space-y-2 sm:space-y-4"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
               <span className="text-gradient">Plan Your</span>
               <br />
               Office Lunch Budget
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto hidden sm:block">
               Get a customized lunch plan in minutes. Simple, fast, and tailored to your team.
             </p>
           </motion.div>
 
           {/* Stepper Progress */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
           >
             <StepperProgress
               steps={stepLabels}
@@ -284,23 +279,23 @@ export default function WizardPage() {
 
           {/* Main Card */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
           >
             <GlassCard hover={false} className="overflow-hidden">
-              <GlassCardHeader>
-                <GlassCardTitle className="text-3xl">
+              <GlassCardHeader className="pb-3 sm:pb-6">
+                <GlassCardTitle className="text-2xl sm:text-3xl">
                   {currentStep.title}
                 </GlassCardTitle>
                 {currentStep.description && (
-                  <GlassCardDescription className="text-base">
+                  <GlassCardDescription className="text-sm sm:text-base">
                     {currentStep.description}
                   </GlassCardDescription>
                 )}
               </GlassCardHeader>
               
-              <GlassCardContent className="space-y-8 min-h-[400px]">
+              <GlassCardContent className="space-y-4 sm:space-y-8 min-h-[300px] sm:min-h-[400px]">
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.div
                     key={currentStepIndex}
@@ -309,7 +304,7 @@ export default function WizardPage() {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: isMobile ? 0.15 : 0.3 }}
                   >
                     {renderStep()}
                   </motion.div>
