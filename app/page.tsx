@@ -7,6 +7,7 @@ import { AuroraBackground } from "@/components/blocks/AuroraBackground";
 import { AnimatedBackground } from "@/components/blocks/AnimatedBackground";
 import { GlobalNav } from "@/components/blocks/GlobalNav";
 import { isMobileDevice, getSlideVariants } from "@/lib/mobile-utils";
+import { runMigrations } from "@/lib/migrations";
 import { WelcomeIntro } from "@/components/wizard/WelcomeIntro";
 import {
   GlassCard,
@@ -43,6 +44,9 @@ export default function WizardPage() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Run data migrations to clean up old localStorage
+    runMigrations();
+    
     loadSchema().then(setSchema);
     setIsMobile(isMobileDevice());
   }, []);
@@ -137,12 +141,12 @@ export default function WizardPage() {
         costs
       );
 
-      // Send n8n webhook - Add small delay to ensure submission is saved
+      // Send n8n webhook - Add delay to ensure submission is saved
       try {
         await logEvent(submissionId, "webhook.send.requested", "wizard", "success");
         
-        // Small delay to ensure submission is fully saved to database
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Increased delay to ensure submission is fully saved to database
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
         const webhookResponse = await fetch("/api/webhook/send", {
           method: "POST",

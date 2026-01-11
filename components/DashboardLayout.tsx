@@ -26,22 +26,24 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isClient, setIsClient] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setIsMounted(true);
     if (!requireAuth()) {
       router.push("/dashboard/login");
     }
   }, []);
 
   useEffect(() => {
+    if (!isMounted) return;
+    
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMounted]);
 
   const handleLogout = () => {
     clearAuthSession();
@@ -66,23 +68,20 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header */}
-      <motion.header
+      <header
         className={cn(
           "sticky top-0 z-50 border-b transition-all duration-300",
           scrolled
             ? "glass-strong border-border/50 shadow-lg"
             : "bg-transparent border-transparent"
         )}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        suppressHydrationWarning
       >
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex h-16 items-center justify-between" suppressHydrationWarning>
           <div className="flex items-center gap-4">
-            <motion.button
-              className="lg:hidden p-2 rounded-lg glass hover:border-primary transition-colors"
+            <button
+              className="lg:hidden p-2 rounded-lg glass hover:border-primary transition-colors active:scale-95"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              whileTap={{ scale: 0.95 }}
             >
               <AnimatePresence mode="wait">
                 {isMobileMenuOpen ? (
@@ -107,12 +106,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.button>
+            </button>
             <Link href="/dashboard">
-              <motion.div
-                className="flex items-center gap-2 group"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <div
+                className="flex items-center gap-2 group hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
@@ -123,7 +120,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <span className="font-bold hidden sm:inline text-gradient">
                   Lunch Loop Admin
                 </span>
-              </motion.div>
+              </div>
             </Link>
           </div>
 
@@ -142,19 +139,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             )}
           </div>
         </div>
-      </motion.header>
+      </header>
 
       <div className="container flex max-w-full overflow-x-hidden">
         {/* Sidebar */}
-        <motion.aside
+        <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-40 w-64 glass-strong border-r border-border/50 pt-16 transition-transform lg:static lg:translate-x-0",
-            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            "fixed inset-y-0 left-0 z-40 w-64 glass-strong border-r border-border/50 pt-16 lg:static lg:translate-x-0",
+            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+            "transition-transform duration-300 ease-in-out"
           )}
-          initial={false}
-          animate={{ x: isMobileMenuOpen || (isClient && window.innerWidth >= 1024) ? 0 : -256 }}
         >
-          <nav className="space-y-2 p-4 overflow-y-auto max-h-screen">
+          <nav className="space-y-2 p-4 overflow-y-auto max-h-screen" suppressHydrationWarning>
             {navItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = item.exact
@@ -162,11 +158,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 : pathname.startsWith(item.href);
 
               return (
-                <motion.div
+                <div
                   key={item.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  style={{
+                    animation: isMounted ? `fadeInLeft 0.3s ease-out ${index * 0.1}s both` : 'none'
+                  }}
                 >
                   <Link
                     href={item.href}
@@ -179,37 +175,30 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {isActive && (
-                      <motion.div
-                        className="absolute inset-0 bg-primary/10 blur-xl -z-10"
-                        layoutId="activeNav"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      <div
+                        className="absolute inset-0 bg-primary/10 blur-xl -z-10 transition-all duration-300"
                       />
                     )}
                     <Icon className={cn("h-5 w-5", isActive && "text-primary")} />
                     <span className="font-medium">{item.label}</span>
                   </Link>
-                </motion.div>
+                </div>
               );
             })}
           </nav>
-        </motion.aside>
+        </aside>
 
         {/* Main content */}
         <main className="flex-1 p-6 lg:p-8 min-w-0 overflow-x-hidden">{children}</main>
       </div>
 
       {/* Mobile menu overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-30 bg-background/80 backdrop-blur lg:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-background/80 backdrop-blur lg:hidden transition-opacity duration-200"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
     </div>
   );
 }
