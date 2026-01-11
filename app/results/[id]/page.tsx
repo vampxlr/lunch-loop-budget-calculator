@@ -43,6 +43,7 @@ import {
   Calendar,
   Clock,
   DollarSign,
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -385,7 +386,7 @@ export default function ResultsPage() {
     <AuroraBackground>
       <GlobalNav showDashboardLink />
       
-      <div className="container mx-auto px-4 py-8 sm:py-12">
+      <div className="container mx-auto px-4 py-8 sm:py-12 max-w-full overflow-x-hidden">
         <div className="max-w-5xl mx-auto space-y-8">
           {/* Hero section */}
           <motion.div
@@ -417,20 +418,28 @@ export default function ResultsPage() {
                 </GlassCardDescription>
               </GlassCardHeader>
               <GlassCardContent>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.15 }}
-                    className="relative p-6 rounded-xl glass border-2 border-primary/30 overflow-hidden"
+                    className="group relative"
                   >
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/20 to-transparent rounded-bl-3xl" />
-                    <div className="relative">
-                      <div className="text-sm font-medium text-muted-foreground mb-2">
-                        Per Person
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative p-6 rounded-2xl glass border-2 border-primary/30 hover:border-primary/50 transition-all">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                          <DollarSign className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                          Per Person
+                        </div>
                       </div>
-                      <div className="text-3xl font-bold text-gradient">
+                      <div className="text-2xl sm:text-3xl font-bold text-gradient break-words">
                         {formatCurrency(submission.cost_per_person)}
+                      </div>
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        Base rate per employee
                       </div>
                     </div>
                   </motion.div>
@@ -439,13 +448,24 @@ export default function ResultsPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="p-6 rounded-xl glass"
+                    className="group relative"
                   >
-                    <div className="text-sm font-medium text-muted-foreground mb-2">
-                      Daily
-                    </div>
-                    <div className="text-3xl font-bold">
-                      {formatCurrency(submission.daily_cost)}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative p-6 rounded-2xl glass border border-border/50 hover:border-blue-500/30 transition-all">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                          <Calendar className="w-5 h-5 text-blue-500" />
+                        </div>
+                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                          Daily
+                        </div>
+                      </div>
+                      <div className="text-2xl sm:text-3xl font-bold break-words">
+                        {formatCurrency(submission.daily_cost)}
+                      </div>
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        Cost per working day
+                      </div>
                     </div>
                   </motion.div>
                   
@@ -453,13 +473,24 @@ export default function ResultsPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.25 }}
-                    className="p-6 rounded-xl glass"
+                    className="group relative"
                   >
-                    <div className="text-sm font-medium text-muted-foreground mb-2">
-                      Weekly
-                    </div>
-                    <div className="text-3xl font-bold">
-                      {formatCurrency(submission.weekly_cost)}
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative p-6 rounded-2xl glass border border-border/50 hover:border-green-500/30 transition-all">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+                          <Calendar className="w-5 h-5 text-green-500" />
+                        </div>
+                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                          Weekly
+                        </div>
+                      </div>
+                      <div className="text-2xl sm:text-3xl font-bold break-words">
+                        {formatCurrency(submission.weekly_cost)}
+                      </div>
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        Total per week
+                      </div>
                     </div>
                   </motion.div>
                   
@@ -467,15 +498,23 @@ export default function ResultsPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="relative p-6 rounded-xl glass border-2 border-secondary/30 overflow-hidden"
+                    className="group relative"
                   >
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-secondary/20 to-transparent rounded-bl-3xl" />
-                    <div className="relative">
-                      <div className="text-sm font-medium text-muted-foreground mb-2">
-                        Monthly
+                    <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+                    <div className="relative p-6 rounded-2xl glass border-2 border-secondary/30 hover:border-secondary/50 transition-all">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center">
+                          <TrendingUp className="w-5 h-5 text-secondary" />
+                        </div>
+                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                          Monthly
+                        </div>
                       </div>
-                      <div className="text-3xl font-bold text-gradient">
+                      <div className="text-2xl sm:text-3xl font-bold text-gradient break-words">
                         {formatCurrency(submission.monthly_cost)}
+                      </div>
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        Estimated monthly total
                       </div>
                     </div>
                   </motion.div>

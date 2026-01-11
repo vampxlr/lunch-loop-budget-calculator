@@ -32,11 +32,11 @@ export function DaysPerWeekStep({
     onChange(field.name, optionValue);
     onValidityChange(true);
     
-    // Auto-advance if enabled
+    // Auto-advance if enabled - faster timing
     if (step.autoAdvance && onAutoAdvance) {
       setTimeout(() => {
         onAutoAdvance();
-      }, 300);
+      }, 200);
     }
   };
 
@@ -55,7 +55,7 @@ export function DaysPerWeekStep({
               type="button"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
+              transition={{ delay: index * 0.03, duration: 0.2 }}
               onClick={() => handleSelect(option.value as number)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -91,7 +91,7 @@ export function DaysPerWeekStep({
                 <motion.div
                   className="absolute inset-0 rounded-xl bg-primary/20 blur-xl -z-10"
                   animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 />
               )}
             </motion.button>

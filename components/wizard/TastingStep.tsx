@@ -36,7 +36,7 @@ export function TastingStep({
     if (step.autoAdvance && onAutoAdvance) {
       setTimeout(() => {
         onAutoAdvance();
-      }, 300);
+      }, 200);
     }
   };
 
@@ -51,7 +51,7 @@ export function TastingStep({
           type="button"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.05, duration: 0.2 }}
           onClick={() => handleSelect(true)}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
@@ -89,7 +89,7 @@ export function TastingStep({
             <motion.div
               className="absolute inset-0 rounded-2xl bg-success/20 blur-xl -z-10"
               animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             />
           )}
         </motion.button>
@@ -98,7 +98,7 @@ export function TastingStep({
           type="button"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.1, duration: 0.2 }}
           onClick={() => handleSelect(false)}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
@@ -136,7 +136,7 @@ export function TastingStep({
             <motion.div
               className="absolute inset-0 rounded-2xl bg-primary/20 blur-xl -z-10"
               animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             />
           )}
         </motion.button>

@@ -2,10 +2,20 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface SliderProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {}
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+  value?: number[];
+  onValueChange?: (value: number[]) => void;
+}
 
 const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, value, onValueChange, ...props }, ref) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = parseFloat(e.target.value);
+      if (onValueChange) {
+        onValueChange([newValue]);
+      }
+    };
+
     return (
       <input
         type="range"
@@ -14,6 +24,8 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
           className
         )}
         ref={ref}
+        value={value?.[0] ?? 0}
+        onChange={handleChange}
         {...props}
       />
     );

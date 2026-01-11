@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuroraBackground } from "@/components/blocks/AuroraBackground";
+import { AnimatedBackground } from "@/components/blocks/AnimatedBackground";
 import { GlobalNav } from "@/components/blocks/GlobalNav";
+import { WelcomeIntro } from "@/components/wizard/WelcomeIntro";
 import {
   GlassCard,
   GlassCardHeader,
@@ -30,6 +32,7 @@ import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function WizardPage() {
   const router = useRouter();
+  const [showIntro, setShowIntro] = useState(true);
   const [schema, setSchema] = useState<PlannerSchema | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
@@ -43,7 +46,8 @@ export default function WizardPage() {
 
   if (!schema) {
     return (
-      <AuroraBackground>
+      <>
+        <AnimatedBackground />
         <div className="min-h-screen flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -54,7 +58,16 @@ export default function WizardPage() {
             <p className="text-center mt-4 text-muted-foreground">Loading planner...</p>
           </motion.div>
         </div>
-      </AuroraBackground>
+      </>
+    );
+  }
+
+  if (showIntro) {
+    return (
+      <>
+        <AnimatedBackground />
+        <WelcomeIntro onStart={() => setShowIntro(false)} />
+      </>
     );
   }
 
@@ -214,10 +227,11 @@ export default function WizardPage() {
   };
 
   return (
-    <AuroraBackground>
+    <>
+      <AnimatedBackground />
       <GlobalNav showDashboardLink />
       
-      <div className="container mx-auto px-4 py-8 sm:py-12">
+      <div className="container mx-auto px-4 py-8 sm:py-12 max-w-full overflow-x-hidden">
         <div className="max-w-3xl mx-auto space-y-8">
           {/* Hero section */}
           <motion.div
@@ -316,6 +330,6 @@ export default function WizardPage() {
           </motion.div>
         </div>
       </div>
-    </AuroraBackground>
+    </>
   );
 }

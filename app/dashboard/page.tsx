@@ -70,7 +70,7 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-8 max-w-full overflow-x-hidden">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -91,17 +91,22 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <GlassCard hover glow className="relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/20 to-transparent rounded-bl-3xl" />
-              <GlassCardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-muted-foreground">
+            <GlassCard hover glow className="group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+              <GlassCardContent className="relative p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <FileText className="h-6 w-6 text-primary" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Total Submissions
                   </span>
-                  <FileText className="h-5 w-5 text-primary" />
                 </div>
-                <div className="text-4xl font-bold text-gradient">
+                <div className="text-4xl sm:text-5xl font-bold text-gradient break-words">
                   {stats.total}
+                </div>
+                <div className="mt-3 text-xs text-muted-foreground">
+                  All time submissions
                 </div>
               </GlassCardContent>
             </GlassCard>
@@ -112,17 +117,22 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <GlassCard hover className="relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-secondary/20 to-transparent rounded-bl-3xl" />
-              <GlassCardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-muted-foreground">
+            <GlassCard hover className="group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+              <GlassCardContent className="relative p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <DollarSign className="h-6 w-6 text-secondary" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Monthly Revenue
                   </span>
-                  <DollarSign className="h-5 w-5 text-secondary" />
                 </div>
-                <div className="text-4xl font-bold">
+                <div className="text-3xl sm:text-4xl font-bold break-words leading-tight">
                   {formatCurrency(stats.totalRevenue)}
+                </div>
+                <div className="mt-3 text-xs text-muted-foreground">
+                  Estimated total revenue
                 </div>
               </GlassCardContent>
             </GlassCard>
@@ -133,15 +143,23 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <GlassCard hover>
-              <GlassCardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-muted-foreground">
+            <GlassCard hover className="group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+              <GlassCardContent className="relative p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Users className="h-6 w-6 text-blue-500" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Avg. Employees
                   </span>
-                  <Users className="h-5 w-5 text-muted-foreground" />
                 </div>
-                <div className="text-4xl font-bold">{stats.avgEmployees}</div>
+                <div className="text-4xl sm:text-5xl font-bold break-words">
+                  {stats.avgEmployees}
+                </div>
+                <div className="mt-3 text-xs text-muted-foreground">
+                  Average team size
+                </div>
               </GlassCardContent>
             </GlassCard>
           </motion.div>
@@ -151,22 +169,26 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <GlassCard hover className="relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-success/20 to-transparent rounded-bl-3xl" />
-              <GlassCardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-muted-foreground">
+            <GlassCard hover className="group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+              <GlassCardContent className="relative p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <TrendingUp className="h-6 w-6 text-green-500" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Tasting Interest
                   </span>
-                  <TrendingUp className="h-5 w-5 text-success" />
                 </div>
-                <div className="text-4xl font-bold">{stats.tastingInterest}</div>
-                <p className="text-sm text-muted-foreground mt-2">
+                <div className="text-4xl sm:text-5xl font-bold break-words">
+                  {stats.tastingInterest}
+                </div>
+                <div className="mt-3 text-xs text-muted-foreground">
                   {stats.total > 0
                     ? Math.round((stats.tastingInterest / stats.total) * 100)
                     : 0}
-                  % of total
-                </p>
+                  % of total submissions
+                </div>
               </GlassCardContent>
             </GlassCard>
           </motion.div>

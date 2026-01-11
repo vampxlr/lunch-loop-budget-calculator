@@ -26,8 +26,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     if (!requireAuth()) {
       router.push("/dashboard/login");
     }
@@ -62,7 +64,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header */}
       <motion.header
         className={cn(
@@ -142,7 +144,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
       </motion.header>
 
-      <div className="container flex">
+      <div className="container flex max-w-full overflow-x-hidden">
         {/* Sidebar */}
         <motion.aside
           className={cn(
@@ -150,9 +152,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           )}
           initial={false}
-          animate={{ x: isMobileMenuOpen || window.innerWidth >= 1024 ? 0 : -256 }}
+          animate={{ x: isMobileMenuOpen || (isClient && window.innerWidth >= 1024) ? 0 : -256 }}
         >
-          <nav className="space-y-2 p-4">
+          <nav className="space-y-2 p-4 overflow-y-auto max-h-screen">
             {navItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = item.exact
@@ -193,7 +195,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </motion.aside>
 
         {/* Main content */}
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-6 lg:p-8 min-w-0 overflow-x-hidden">{children}</main>
       </div>
 
       {/* Mobile menu overlay */}

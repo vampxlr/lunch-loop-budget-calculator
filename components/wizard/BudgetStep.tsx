@@ -44,7 +44,7 @@ export function BudgetStep({
     if (step.autoAdvance && onAutoAdvance) {
       setTimeout(() => {
         onAutoAdvance();
-      }, 300);
+      }, 200);
     }
   };
 
@@ -86,7 +86,7 @@ export function BudgetStep({
               type="button"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05, duration: 0.2 }}
               onClick={() => handlePresetSelect(option.value as number, option.label.toLowerCase())}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -131,7 +131,7 @@ export function BudgetStep({
                 <motion.div
                   className="absolute inset-0 rounded-xl bg-primary/20 blur-xl -z-10"
                   animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 />
               )}
             </motion.button>
@@ -141,7 +141,7 @@ export function BudgetStep({
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.15, duration: 0.2 }}
           className={cn(
             "p-6 rounded-xl border-2 transition-all glass",
             showCustom
