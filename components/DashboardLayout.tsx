@@ -6,7 +6,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { MotionButton } from "./ui/motion-button";
-import { requireAuth, clearAuthSession, isAuthRequired } from "@/lib/auth";
 import {
   LayoutDashboard,
   FileText,
@@ -27,13 +26,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  
+  // Read auth enabled flag from env (for showing logout button)
+  const authEnabled = process.env.NEXT_PUBLIC_ADMIN_AUTH_ENABLED === "true";
 
   useEffect(() => {
     setIsMounted(true);
-    if (!requireAuth()) {
-      router.push("/dashboard/login");
-    }
-  }, []);
+    // Middleware handles auth redirect, no need to check here
+  }, [router]);
 
   useEffect(() => {
     if (!isMounted) return;
@@ -45,9 +45,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMounted]);
 
-  const handleLogout = () => {
-    clearAuthSession();
-    router.push("/dashboard/login");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } finally {
+      router.push("/dashboard/login");
+      router.refresh();
+    }
   };
 
   const navItems = [
@@ -126,7 +130,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            {isAuthRequired() && (
+            {authEnabled && pathname !== "/dashboard/login" && (
               <MotionButton
                 variant="ghost"
                 size="sm"

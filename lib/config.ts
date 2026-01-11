@@ -61,7 +61,10 @@ export function getAppConfig(): AppConfig {
     config.n8n.webhookUrl = process.env.N8N_WEBHOOK_URL;
     config.n8n.sharedSecret = process.env.N8N_SHARED_SECRET;
 
-    config.admin.authEnabled = process.env.ADMIN_AUTH_ENABLED === "true";
+    // Read authEnabled from NEXT_PUBLIC_ first (for consistency between server/client)
+    // Keep username/password server-only (never expose to client)
+    const adminAuthEnabled = process.env.NEXT_PUBLIC_ADMIN_AUTH_ENABLED ?? process.env.ADMIN_AUTH_ENABLED;
+    config.admin.authEnabled = adminAuthEnabled === "true";
     config.admin.username = process.env.ADMIN_USERNAME || "admin";
     config.admin.password = process.env.ADMIN_PASSWORD || "admin";
   } catch (error) {
