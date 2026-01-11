@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Theme - Clean & Futuristic */
+    --background: 240 20% 99%;
+    --foreground: 240 10% 5%;
+    
+    --card: 240 20% 98%;
+    --card-foreground: 240 10% 10%;
+    
+    --popover: 240 20% 99%;
+    --popover-foreground: 240 10% 5%;
+    
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 200 95% 55%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 240 10% 95%;
+    --muted-foreground: 240 5% 45%;
+    
+    --accent: 280 90% 65%;
+    --accent-foreground: 0 0% 100%;
+    
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --danger: 0 84% 60%;
+    
+    --border: 240 10% 88%;
+    --input: 240 10% 90%;
+    --ring: 262 83% 58%;
+    
+    --radius: 0.75rem;
+    
+    /* Glass & Effects */
+    --glass-bg: 240 20% 99%;
+    --glass-border: 240 10% 88%;
+    --shimmer: 0 0% 100%;
+  }
+
+  .dark {
+    /* Dark Theme - Deep & Futuristic */
+    --background: 240 10% 4%;
+    --foreground: 240 10% 98%;
+    
+    --card: 240 8% 8%;
+    --card-foreground: 240 10% 95%;
+    
+    --popover: 240 10% 6%;
+    --popover-foreground: 240 10% 98%;
+    
+    --primary: 262 80% 65%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 200 90% 60%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 240 5% 15%;
+    --muted-foreground: 240 5% 60%;
+    
+    --accent: 280 85% 70%;
+    --accent-foreground: 0 0% 100%;
+    
+    --success: 142 76% 45%;
+    --warning: 38 92% 60%;
+    --danger: 0 84% 65%;
+    
+    --border: 240 8% 18%;
+    --input: 240 8% 12%;
+    --ring: 262 80% 65%;
+    
+    /* Glass & Effects */
+    --glass-bg: 240 10% 8%;
+    --glass-border: 240 10% 20%;
+    --shimmer: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+@layer utilities {
+  /* Glass morphism utilities */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass-bg) / 0.7),
+      hsl(var(--glass-bg) / 0.5)
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--glass-border) / 0.3);
+  }
+  
+  .glass-strong {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass-bg) / 0.9),
+      hsl(var(--glass-bg) / 0.7)
+    );
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--glass-border) / 0.5);
+  }
+  
+  /* Shimmer effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--shimmer) / 0.1),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+  
+  @keyframes shimmer {
+    100% {
+      left: 100%;
+    }
+  }
+  
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
