@@ -119,7 +119,7 @@ export const defaultPlannerSchema: PlannerSchema = {
     {
       id: "contact_to_send_results",
       title: "Send Your Results",
-      description: "Enter your email and we'll send the full estimate to you instantly",
+      description: "Where should we send your results?",
       enabled: true,
       fields: [
         {
@@ -139,6 +139,20 @@ export const defaultPlannerSchema: PlannerSchema = {
           type: "phone",
           required: false,
           placeholder: "+880 1700-000000"
+        },
+        {
+          name: "promo_opt_in_email",
+          label: "Email Promotions",
+          type: "checkbox",
+          required: false,
+          default: false
+        },
+        {
+          name: "promo_opt_in_sms",
+          label: "SMS Promotions",
+          type: "checkbox",
+          required: false,
+          default: false
         }
       ],
       autoAdvance: false

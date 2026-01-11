@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/glass-card";
 import { MotionButton } from "@/components/ui/motion-button";
 import { StepperProgress } from "@/components/ui/stepper-progress";
-import { ContactStep } from "@/components/wizard/ContactStep";
+import { FinalContactStep } from "@/components/wizard/FinalContactStep";
 import { EmployeesCountStep } from "@/components/wizard/EmployeesCountStep";
 import { DaysPerWeekStep } from "@/components/wizard/DaysPerWeekStep";
 import { DeliveryTimeStep } from "@/components/wizard/DeliveryTimeStep";
@@ -126,6 +126,8 @@ export default function WizardPage() {
         budget_type: answers.budget_type,
         free_tasting_interest: answers.free_tasting_interest,
         promo_opt_in: answers.promo_opt_in,
+        promo_opt_in_email: answers.promo_opt_in_email || false,
+        promo_opt_in_sms: answers.promo_opt_in_sms || false,
       };
 
       const costs = calculateCosts(submissionAnswers, schema.pricing);
@@ -186,6 +188,8 @@ export default function WizardPage() {
               delivery_modifier: costs.delivery_modifier,
             },
             promo_opt_in: answers.promo_opt_in,
+            promo_opt_in_email: answers.promo_opt_in_email || false,
+            promo_opt_in_sms: answers.promo_opt_in_sms || false,
             free_tasting_interest: answers.free_tasting_interest,
             timestamp: new Date().toISOString(),
           }),
@@ -223,9 +227,9 @@ export default function WizardPage() {
 
     switch (currentStep.id) {
       case "contact":
-        return <ContactStep {...props} />;
+        return <FinalContactStep {...props} />;
       case "contact_to_send_results":
-        return <ContactStep {...props} />;
+        return <FinalContactStep {...props} />;
       case "employees_count":
         return <EmployeesCountStep {...props} />;
       case "days_per_week":

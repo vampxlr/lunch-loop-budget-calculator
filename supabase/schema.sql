@@ -25,14 +25,16 @@ CREATE TABLE IF NOT EXISTS submissions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     email TEXT NOT NULL,
-    phone TEXT NOT NULL,
+    phone TEXT,
     company_name TEXT,
     answers_json JSONB NOT NULL,
     cost_per_person NUMERIC(10, 2) NOT NULL,
     daily_cost NUMERIC(10, 2) NOT NULL,
     weekly_cost NUMERIC(10, 2) NOT NULL,
     monthly_cost NUMERIC(10, 2) NOT NULL,
-    free_tasting_interest BOOLEAN DEFAULT FALSE
+    free_tasting_interest BOOLEAN DEFAULT FALSE,
+    promo_opt_in_email BOOLEAN DEFAULT FALSE,
+    promo_opt_in_sms BOOLEAN DEFAULT FALSE
 );
 
 -- Add indexes for better query performance

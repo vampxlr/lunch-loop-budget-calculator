@@ -9,6 +9,8 @@ export interface SubmissionAnswers {
   budget_type?: "basic" | "standard" | "premium" | "custom";
   free_tasting_interest: boolean;
   promo_opt_in?: boolean;
+  promo_opt_in_email?: boolean;
+  promo_opt_in_sms?: boolean;
   [key: string]: any;
 }
 
@@ -33,6 +35,8 @@ export interface Submission {
   monthly_cost: number;
   free_tasting_interest: boolean;
   promo_opt_in?: boolean;
+  promo_opt_in_email?: boolean;
+  promo_opt_in_sms?: boolean;
 }
 
 export interface Event {

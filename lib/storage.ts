@@ -98,7 +98,9 @@ export async function saveSubmission(
     weekly_cost: costs.weekly_cost,
     monthly_cost: costs.monthly_cost,
     free_tasting_interest: answers.free_tasting_interest,
-    promo_opt_in: answers.promo_opt_in
+    promo_opt_in: answers.promo_opt_in,
+    promo_opt_in_email: answers.promo_opt_in_email || false,
+    promo_opt_in_sms: answers.promo_opt_in_sms || false
   };
 
   if (mode === "db") {
