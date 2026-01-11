@@ -41,15 +41,22 @@ export function getAppConfig(): AppConfig {
 
   // Try to read from environment variables
   try {
-    config.schemaSource = (process.env.SCHEMA_SOURCE as SchemaSource) || "file";
+    // Read NEXT_PUBLIC_ versions first (available on client), fallback to server-only versions
+    config.schemaSource = (
+      process.env.NEXT_PUBLIC_SCHEMA_SOURCE ?? process.env.SCHEMA_SOURCE
+    ) as SchemaSource || "file";
+    
     config.configSource = (process.env.CONFIG_SOURCE as ConfigSource) || "dummy";
-    config.persistenceMode = (process.env.PERSISTENCE_MODE as PersistenceMode) || "local";
+    
+    config.persistenceMode = (
+      process.env.NEXT_PUBLIC_PERSISTENCE_MODE ?? process.env.PERSISTENCE_MODE
+    ) as PersistenceMode || "local";
 
     config.supabase.url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     config.supabase.anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     config.supabase.serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    config.contactPhone = process.env.CONTACT_PHONE || "+8801700000000";
+    config.contactPhone = (process.env.NEXT_PUBLIC_CONTACT_PHONE ?? process.env.CONTACT_PHONE) || "+8801700000000";
 
     config.n8n.webhookUrl = process.env.N8N_WEBHOOK_URL;
     config.n8n.sharedSecret = process.env.N8N_SHARED_SECRET;
