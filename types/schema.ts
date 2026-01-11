@@ -8,7 +8,7 @@ export type StepType =
   | "promo_offers_opt_in"
   | "contact_to_send_results";
 
-export type FieldType = "text" | "email" | "phone" | "slider" | "chips" | "time" | "preset_budget" | "yes_no";
+export type FieldType = "text" | "email" | "phone" | "slider" | "chips" | "time" | "preset_budget" | "yes_no" | "checkbox";
 
 export interface StepField {
   name: string;
