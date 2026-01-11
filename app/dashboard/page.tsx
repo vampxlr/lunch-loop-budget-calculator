@@ -34,7 +34,7 @@ export default function DashboardPage() {
       const filtered = submissions.filter(
         (sub) =>
           sub.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          sub.phone.includes(searchTerm) ||
+          sub.phone?.includes(searchTerm) ||
           (sub.company_name &&
             sub.company_name.toLowerCase().includes(searchTerm.toLowerCase()))
       );
